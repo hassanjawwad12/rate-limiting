@@ -13,7 +13,7 @@ type Message struct {
 
 func endpointHandler(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
-	writer.WriteHeader(200)
+	writer.WriteHeader(http.StatusOK)
 
 	message := Message{
 		Status: "Successful",
@@ -22,14 +22,13 @@ func endpointHandler(writer http.ResponseWriter, request *http.Request) {
 
 	err := json.NewEncoder(writer).Encode(&message)
 	if err != nil {
-		http.Error(writer, err.Error(), http.StatusInternalServerError)
 		return
 	}
 }
 
 func main() {
 
-	http.HandleFunc("/ping", endpointHandler)
+	http.Handle("/ping", rateLimiter(endpointHandler))
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		log.Println("There was an error", err)
