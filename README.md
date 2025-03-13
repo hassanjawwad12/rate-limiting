@@ -2,8 +2,6 @@
 
 Rate limiting is a technique used to control the amount of incoming and outgoing traffic to or from a network, server, or service. This repository demonstrates three different approaches to implementing rate limiting in Go applications.
 
-<img src="token-bucket.png"/>
-
 ## What is Rate Limiting?
 
 Rate limiting restricts how many requests a client can make to an API within a specified time period. When a client exceeds the allowed limit, the server typically responds with a 429 (Too Many Requests) status code, indicating that the client should retry after a certain period.
@@ -81,3 +79,5 @@ for i in {1..10}; do curl -i http://localhost:8080/ping; done
 # Test with parallel requests
 for i in {1..10}; do curl -s http://localhost:8080/ping &done
 ```
+<img src="token-bucket.png"/>
+
