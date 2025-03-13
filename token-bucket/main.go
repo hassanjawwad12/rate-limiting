@@ -4,23 +4,21 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-)
 
-type Message struct {
-	Status string `json:"status"`
-	Body   string `json:"body"`
-}
+	"github.com/hassanjawwad12/token-bucket/message"
+	"github.com/hassanjawwad12/token-bucket/rate"
+)
 
 func endpointHandler(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 	writer.WriteHeader(http.StatusOK)
 
-	message := Message{
+	resMessage := message.Message{
 		Status: "Successful",
 		Body:   "Hello, World!",
 	}
 
-	err := json.NewEncoder(writer).Encode(&message)
+	err := json.NewEncoder(writer).Encode(&resMessage)
 	if err != nil {
 		return
 	}
@@ -28,7 +26,7 @@ func endpointHandler(writer http.ResponseWriter, request *http.Request) {
 
 func main() {
 
-	http.Handle("/ping", rateLimiter(endpointHandler))
+	http.Handle("/ping", rate.RateLimiter(endpointHandler))
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		log.Println("There was an error", err)
