@@ -77,6 +77,7 @@ cd ../toolbooth
 go run main.go
 
 # Test with curl
-`for i in {1..10}; do curl -i http://localhost:8080/ping; done`
+for i in {1..10}; do curl -i http://localhost:8080/ping; done
 # Test with parallel requests
-`for i in {1..10}; do curl -s http://localhost:8080/ping &done`
+for i in {1..10}; do curl -s http://localhost:8080/ping &done
+```
